@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.7" />
+    <PackageReference Include="Serilog" Version="3.1.0-dev-02086" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../src/Serilog.Expressions/Serilog.Expressions.csproj" />
+    <ProjectReference Include="..\..\src\Serilog.Expressions.Utf8\Serilog.Expressions.Utf8.csproj" />
+  </ItemGroup>
+
+</Project>

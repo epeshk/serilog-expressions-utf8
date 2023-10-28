@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>true</IsPackable>
+        <RootNamespace>Serilog</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <AssemblyOriginatorKeyFile>../../assets/Serilog.snk</AssemblyOriginatorKeyFile>
+        <SignAssembly>true</SignAssembly>
+
+        <PackageId>Serilog.Expressions.Utf8</PackageId>
+        <Version>0.0.1</Version>
+        <PackageVersion>0.0.1</PackageVersion>
+
+        <PackageTags>serilog;formatting;expressions;utf8</PackageTags>
+        <PackageIcon>images\icon.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/epeshk/serilog-expressions-utf8</PackageProjectUrl>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/epeshk/serilog-expressions-utf8</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <RootNamespace>Serilog</RootNamespace>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <DefineConstants>UTF8_RENDERING</DefineConstants>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageDescription>Serilog.Expressions fork for writing events to IBufferWriter&lt;byte&gt;</PackageDescription>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <Compile Include="..\Serilog.Utf8.Commons\Includes\**" LinkBase="Commons\"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="2.10.0" />
+      <PackageReference Include="Serilog.Formatting.BufferWriter" Version="0.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="..\..\..\serilog-utf8-commons\src\Commons\Includes\**" LinkBase="Commons\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" Visible="true" PackagePath="README.md" />
+        <None Include="..\..\assets\icon.png" Pack="true" Visible="false" PackagePath="images\icon.png" />
+    </ItemGroup>
+</Project>

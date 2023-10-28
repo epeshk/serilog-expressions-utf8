@@ -22,11 +22,11 @@ public class Program
     {
         using var log = new LoggerConfiguration()
             .Enrich.WithProperty("Application", "Sample")
-            .WriteTo.Console(new ExpressionTemplate(
+            .WriteTo.RawConsole(new Utf8ExpressionTemplate(
                 "[{@t:HH:mm:ss} {@l:u3}" +
                 "{#if SourceContext is not null} ({Substring(SourceContext, LastIndexOf(SourceContext, '.') + 1)}){#end}] " +
                 "{@m} (first item is {coalesce(Items[0], '<empty>')}) {rest()}\n{@x}",
-                theme: TemplateTheme.Code))
+                theme: Utf8TemplateTheme.Code))
             .CreateLogger();
 
         log.Information("Running {Example}", nameof(TextFormattingExample1));
@@ -42,7 +42,7 @@ public class Program
     {
         using var log = new LoggerConfiguration()
             .Enrich.WithProperty("Application", "Example")
-            .WriteTo.Console(new ExpressionTemplate(
+            .WriteTo.RawConsole(new Utf8ExpressionTemplate(
                 "{ {@t: UtcDateTime(@t), @mt, @l: if @l = 'Information' then undefined() else @l, @x, ..@p} }\n"))
             .CreateLogger();
 
@@ -59,10 +59,12 @@ public class Program
     {
         using var log = new LoggerConfiguration()
             .Enrich.WithProperty("Application", "Example")
-            .Enrich.WithComputed("FirstItem", "coalesce(Items[0], '<empty>')")
-            .Enrich.WithComputed("SourceContext", "coalesce(Substring(SourceContext, LastIndexOf(SourceContext, '.') + 1), '<no source>')")
-            .Filter.ByIncludingOnly("Items is null or Items[?] like 'C%'")
-            .WriteTo.Console(outputTemplate:
+            
+            // Enrichers and FIlters are not supported in Serilog.Expressions.Utf8 yet. Use original Serilog.Expressions package for these purposes.
+            // .Enrich.WithComputed("FirstItem", "coalesce(Items[0], '<empty>')")
+            // .Enrich.WithComputed("SourceContext", "coalesce(Substring(SourceContext, LastIndexOf(SourceContext, '.') + 1), '<no source>')")
+            // .Filter.ByIncludingOnly("Items is null or Items[?] like 'C%'")
+            .WriteTo.RawConsole(outputTemplate:
                 "[{Timestamp:HH:mm:ss} {Level:u3} ({SourceContext})] {Message:lj} (first item is {FirstItem}){NewLine}{Exception}")
             .CreateLogger();
 
@@ -79,16 +81,16 @@ public class Program
     {
         // Emulates `Microsoft.Extensions.Logging`'s `ConsoleLogger`.
 
-        var melon = new TemplateTheme(TemplateTheme.Literate, new Dictionary<TemplateThemeStyle, string>
+        var melon = new Utf8TemplateTheme(Utf8TemplateTheme.Literate, new Dictionary<Utf8TemplateThemeStyle, byte[]>
         {
             // `Information` is dark green in MEL.
-            [TemplateThemeStyle.LevelInformation] = "\x1b[38;5;34m",
-            [TemplateThemeStyle.String] = "\x1b[38;5;159m",
-            [TemplateThemeStyle.Number] = "\x1b[38;5;159m"
+            [Utf8TemplateThemeStyle.LevelInformation] = "\x1b[38;5;34m"u8.ToArray(),
+            [Utf8TemplateThemeStyle.String] = "\x1b[38;5;159m"u8.ToArray(),
+            [Utf8TemplateThemeStyle.Number] = "\x1b[38;5;159m"u8.ToArray()
         });
 
         using var log = new LoggerConfiguration()
-            .WriteTo.Console(new ExpressionTemplate(
+            .WriteTo.RawConsole(new Utf8ExpressionTemplate(
                 "{@l:w4}: {SourceContext}\n" +
                 "{#if Scope is not null}" +
                 "      {#each s in Scope}=> {s}{#delimit} {#end}\n" +

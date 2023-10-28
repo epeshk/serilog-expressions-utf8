@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+    <PackageReference Include="Serilog" Version="3.1.0-dev-02086" />
+    <PackageReference Include="Serilog.Sinks.RawConsole" Version="0.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/Serilog.Expressions/Serilog.Expressions.csproj" />
+    <ProjectReference Include="..\..\src\Serilog.Expressions.Utf8\Serilog.Expressions.Utf8.csproj" />
   </ItemGroup>
 
 </Project>
